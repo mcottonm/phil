@@ -6,7 +6,7 @@
 /*   By: mcottonm <mcottonm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 18:10:23 by mcottonm          #+#    #+#             */
-/*   Updated: 2021/02/04 23:33:54 by mcottonm         ###   ########.fr       */
+/*   Updated: 2021/02/05 18:50:44 by mcottonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ static void	pars_args(int ac, char **av, t_phil *g_sphil)
 		exit(1);
 	if (60 > (g_sphil->time_to_eat = ft_atoi(av[3])))
 		exit(1);
-	if (60 > (g_sphil->time_to_sleep = ft_atoi(av[3])))
+	if (60 > (g_sphil->time_to_sleep = ft_atoi(av[4])))
 		exit(1);
 	if (ac == 6)
-		g_sphil->times = ft_atoi(av[4]);
+		g_sphil->times = ft_atoi(av[5]);
 	else
 		g_sphil->times = 0;
 	g_work_s.kill = false;
@@ -58,35 +58,6 @@ static void	emul_end(t_phil g_sphil, pthread_t *phils)
 	i = -1;
 	while (++i < g_sphil.nbr_of_phil + 2)
 		pthread_mutex_destroy(&(g_work_s.lock[i]));
-}
-
-static void	control(void)
-{
-	int		i;
-	long	timer_d;
-
-	timer_d = g_work_s.start + g_sphil.time_to_die;
-	pth_sleep(timer_d);
-	while (true)
-	{
-		i = -1;
-		while (++i < g_sphil.nbr_of_phil)
-		{
-			pthread_mutex_lock(&(g_work_s.lock[g_sphil.nbr_of_phil + 1]));
-			g_work_s.phil_check[i] -= DELTA_TIME * 2;
-			if (g_work_s.phil_check[i] < 0)
-			{
-				g_work_s.kill = true;
-				pthread_mutex_unlock(&(g_work_s.lock
-				[g_sphil.nbr_of_phil + 1]));
-				printf("[%ld] %d is died\n", timer_now() - g_work_s.start, ++i);
-				return ;
-			}
-			pthread_mutex_unlock(&(g_work_s.lock[g_sphil.nbr_of_phil + 1]));
-		}
-		timer_d += DELTA_TIME * 2;
-		pth_sleep(timer_d);
-	}
 }
 
 int			main(int ac, char **av)

@@ -6,7 +6,7 @@
 /*   By: mcottonm <mcottonm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/04 22:50:08 by mcottonm          #+#    #+#             */
-/*   Updated: 2021/02/05 00:04:55 by mcottonm         ###   ########.fr       */
+/*   Updated: 2021/02/05 18:52:52 by mcottonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,28 @@ static void	eat(long mark, long *timer, const int l_fork, const int r_fork)
 	add_to_queue(mark, 2);
 	*timer += g_sphil.time_to_eat;
 	pth_sleep(*timer);
-	pthread_mutex_unlock(&(g_work_s.lock[l_fork]));
-	pthread_mutex_unlock(&(g_work_s.lock[r_fork]));
 }
 
-static void	sleeping(long mark, long *timer)
+static void	sleeping(long mark, long *timer, const int l_fork, const int r_fork)
 {
 	add_to_queue(mark, 3);
 	*timer += g_sphil.time_to_sleep;
+	pthread_mutex_unlock(&(g_work_s.lock[l_fork]));
+	pthread_mutex_unlock(&(g_work_s.lock[r_fork]));
 	pth_sleep(*timer);
+}
+
+static bool	times_check(int mark, int *pth_times,
+const int l_fork, const int r_fork)
+{
+	if ((!--(*pth_times) && g_sphil.times) || g_work_s.kill)
+	{
+		pthread_mutex_unlock(&(g_work_s.lock[l_fork]));
+		pthread_mutex_unlock(&(g_work_s.lock[r_fork]));
+		g_work_s.phil_check[mark] = TIMES_FLAG;
+		return (false);
+	}
+	return (true);
 }
 
 void		*start_thread(void *void_ptr)
@@ -62,10 +75,9 @@ void		*start_thread(void *void_ptr)
 			return (NULL);
 		think(mark, l_fork, r_fork);
 		eat(mark, &timer, l_fork, r_fork);
-		printf()
-		if ((!pth_times-- && g_sphil.times) || g_work_s.kill)
+		if (!times_check(mark, &pth_times, l_fork, r_fork))
 			return (NULL);
-		sleeping(mark, &timer);
+		sleeping(mark, &timer, l_fork, r_fork);
 	}
 	return (NULL);
 }

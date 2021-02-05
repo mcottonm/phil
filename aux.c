@@ -6,7 +6,7 @@
 /*   By: mcottonm <mcottonm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/04 22:58:03 by mcottonm          #+#    #+#             */
-/*   Updated: 2021/02/05 00:01:59 by mcottonm         ###   ########.fr       */
+/*   Updated: 2021/02/05 18:52:29 by mcottonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	ft_exit(int i)
 	exit(1);
 }
 
-int	ft_strncmp(const char *str1, const char *str2, size_t n)
+int		ft_strncmp(const char *str1, const char *str2, size_t n)
 {
 	const unsigned char	*s1 = (unsigned char*)str1;
 	const unsigned char	*s2 = (unsigned char*)str2;

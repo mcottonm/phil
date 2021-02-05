@@ -6,7 +6,7 @@
 /*   By: mcottonm <mcottonm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/04 21:45:25 by mcottonm          #+#    #+#             */
-/*   Updated: 2021/02/05 00:02:26 by mcottonm         ###   ########.fr       */
+/*   Updated: 2021/02/05 18:51:26 by mcottonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 
 # define TIME_TO_START 1000
 # define DELTA_TIME 50
+# define TIMES_FLAG -42
 
 typedef struct		s_phil
 {
@@ -54,6 +55,7 @@ t_work		g_work_s;
 void				add_to_queue(long mark, int stat);
 void				*logger(void *vd);
 void				*start_thread(void *void_ptr);
+void				control(void);
 
 void				ft_exit(int i);
 int					ft_strncmp(const char *str1, const char *str2, size_t n);
