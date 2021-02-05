@@ -4,14 +4,14 @@ SRCS =      aux.c\
 			logger.c\
 			phil.c\
 			pthreads.c\
-			time.c
+			control.c
 
 OBG =       $(SRCS:.c=.o)
 
 all:        $(NAME)
 
 $(NAME):
-			gcc $(SRCS) -Wall -Wextra -Werror philo_one
+			gcc -o philo_one $(SRCS) -Wall -Wextra -Werror
 
 clean:
 			rm -f $(OBG)
