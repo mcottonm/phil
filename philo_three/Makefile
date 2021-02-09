@@ -1,4 +1,4 @@
-NAME =      philo_two
+NAME =      philo_three
 
 SRCS =      aux.c\
 			logger.c\
@@ -11,7 +11,7 @@ OBG =       $(SRCS:.c=.o)
 all:        $(NAME)
 
 $(NAME):	$(OBG)
-			gcc -o philo_two $(SRCS) -Wall -Wextra -Werror
+			gcc -o philo_three $(SRCS) -Wall -Wextra -Werror
 
 clean:
 			rm -f $(OBG)

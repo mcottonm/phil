@@ -6,7 +6,7 @@
 /*   By: mcottonm <mcottonm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 18:10:23 by mcottonm          #+#    #+#             */
-/*   Updated: 2021/02/09 17:06:36 by mcottonm         ###   ########.fr       */
+/*   Updated: 2021/02/09 23:23:10 by mcottonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,33 +37,46 @@ static void	pars_args(int ac, char **av, t_phil *g_sphil)
 	g_work_s.qu_i = 0;
 }
 
-static void	emul_strt(t_phil sphil, pthread_t *phils)
+static void	emul_strt(t_phil sphil)
 {
 	int		i;
 
 	g_work_s.start = timer_now() + 1000;
 	i = -1;
 	sem_unlink(SEM_NAME_L);
-	g_work_s.l_fork= sem_open(SEM_NAME_L, O_CREAT, 0644, g_sphil.nbr_of_phil / 2);
+	g_work_s.l_fork = sem_open(SEM_NAME_L, O_CREAT,
+		0644, g_sphil.nbr_of_phil / 2);
 	sem_unlink(SEM_NAME_R);
-	g_work_s.r_fork = sem_open(SEM_NAME_R, O_CREAT, 0644, g_sphil.nbr_of_phil / 2);
+	g_work_s.r_fork = sem_open(SEM_NAME_R, O_CREAT,
+		0644, g_sphil.nbr_of_phil / 2);
 	sem_unlink(SEM_NAME_LOG);
 	g_work_s.log_sem = sem_open(SEM_NAME_LOG, O_CREAT, 0644, 1);
-	i = -1;
 	g_work_s.start = timer_now() + TIME_TO_START;
+	i = -1;
 	while (++i < sphil.nbr_of_phil)
-		pthread_create(&(phils[i]), NULL, start_thread, (void *)(long)i);
+		if (!(g_work_s.pid[i] = fork()))
+			control(i);
 }
 
-static void	emul_end(t_phil g_sphil, pthread_t *phils)
+static void	emul_end(t_phil g_sphil)
 {
-	int	i;
+	int status;
+	int g;
+	int pid;
 
-	i = -1;
-	while (++i < g_sphil.nbr_of_phil + 1)
-		if ((pthread_join(phils[i], NULL)))
-			exit(1);
-	i = -1;
+	status = 0;
+	g = -1;
+	while ((pid = waitpid(-1, &status, WNOHANG)) == 0)
+	{
+		if (status)
+		{
+			while (++g < g_sphil.nbr_of_phil)
+				if (g != pid)
+					kill(g_work_s.pid[g++], SIGKILL);
+			sem_post(g_work_s.log_sem);
+			break ;
+		}
+	}
 	sem_unlink(SEM_NAME_L);
 	sem_unlink(SEM_NAME_R);
 	sem_unlink(SEM_NAME_LOG);
@@ -71,12 +84,8 @@ static void	emul_end(t_phil g_sphil, pthread_t *phils)
 
 int			main(int ac, char **av)
 {
-	pthread_t		phils[201];
-
 	pars_args(ac, av, &g_sphil);
-	emul_strt(g_sphil, phils);
-	pthread_create(&(phils[g_sphil.nbr_of_phil + 1]), NULL, logger, NULL);
-	control();
-	emul_end(g_sphil, phils);
+	emul_strt(g_sphil);
+	emul_end(g_sphil);
 	return (0);
 }

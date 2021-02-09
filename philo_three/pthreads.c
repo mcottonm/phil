@@ -6,7 +6,7 @@
 /*   By: mcottonm <mcottonm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/04 22:50:08 by mcottonm          #+#    #+#             */
-/*   Updated: 2021/02/09 17:06:17 by mcottonm         ###   ########.fr       */
+/*   Updated: 2021/02/09 23:18:08 by mcottonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	think(long mark)
 static void	eat(long mark, long *timer)
 {
 	*timer = timer_now();
-	g_work_s.phil_check[mark] = g_sphil.time_to_die + g_sphil.time_to_eat;
+	g_work_s.phil_check = g_sphil.time_to_die + g_sphil.time_to_eat;
 	if (g_work_s.kill)
 	{
 		sem_post(g_work_s.l_fork);
@@ -43,23 +43,23 @@ static void	sleeping(long mark, long *timer)
 	pth_sleep(*timer);
 }
 
-static bool	times_check(int mark, int *pth_times)
+static bool	times_check(int *pth_times)
 {
 	if ((!--(*pth_times) && g_sphil.times) || g_work_s.kill)
 	{
 		sem_post(g_work_s.l_fork);
 		sem_post(g_work_s.r_fork);
-		g_work_s.phil_check[mark] = TIMES_FLAG;
+		g_work_s.kill = true;
 		return (false);
 	}
 	return (true);
 }
 
-void		*start_thread(void *void_ptr)
+void		*phil_start(void *void_ptr)
 {
-	const int	mark = (const int)void_ptr;
 	long		timer;
 	int			pth_times;
+	const int	mark = (const int)void_ptr;
 
 	pth_times = g_sphil.times;
 	timer = g_work_s.start;
@@ -72,7 +72,7 @@ void		*start_thread(void *void_ptr)
 			return (NULL);
 		think(mark);
 		eat(mark, &timer);
-		if (!times_check(mark, &pth_times))
+		if (!times_check(&pth_times))
 			return (NULL);
 		sleeping(mark, &timer);
 	}

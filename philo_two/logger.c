@@ -6,7 +6,7 @@
 /*   By: mcottonm <mcottonm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/04 22:55:35 by mcottonm          #+#    #+#             */
-/*   Updated: 2021/02/09 14:05:52 by mcottonm         ###   ########.fr       */
+/*   Updated: 2021/02/09 17:01:32 by mcottonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,10 @@ void		add_to_queue(long mark, int stat)
 	long	time;
 	int		width;
 
-	pthread_mutex_lock(&(g_work_s.lock[g_sphil.nbr_of_phil + 1]));
+	sem_wait(g_work_s.log_sem);
 	if (g_work_s.kill)
 	{
-		pthread_mutex_unlock(&(g_work_s.lock[g_sphil.nbr_of_phil + 1]));
+		sem_post(g_work_s.log_sem);
 		return ;
 	}
 	width = 15;
@@ -71,7 +71,7 @@ void		add_to_queue(long mark, int stat)
 	g_work_s.qu_i += width;
 	add_num(mark + 1, &width);
 	add_messg(stat);
-	pthread_mutex_unlock(&(g_work_s.lock[g_sphil.nbr_of_phil + 1]));
+	sem_post(g_work_s.log_sem);
 }
 
 void		*logger(void *vd)
@@ -84,11 +84,11 @@ void		*logger(void *vd)
 	{
 		if (g_work_s.kill)
 			return (NULL);
-		pthread_mutex_lock(&(g_work_s.lock[g_sphil.nbr_of_phil + 1]));
+		sem_wait(g_work_s.log_sem);
 		if (g_work_s.qu_i)
 			write(1, g_work_s.queue, g_work_s.qu_i);
 		g_work_s.qu_i = 0;
-		pthread_mutex_unlock(&(g_work_s.lock[g_sphil.nbr_of_phil + 1]));
+		sem_post(g_work_s.log_sem);
 		timer += DELTA_TIME * 2;
 		pth_sleep(timer);
 	}

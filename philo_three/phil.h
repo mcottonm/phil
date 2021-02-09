@@ -6,7 +6,7 @@
 /*   By: mcottonm <mcottonm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/04 21:45:25 by mcottonm          #+#    #+#             */
-/*   Updated: 2021/02/09 17:05:24 by mcottonm         ###   ########.fr       */
+/*   Updated: 2021/02/09 23:18:13 by mcottonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@
 # include <sys/time.h>
 # include <string.h>
 # include <semaphore.h>
+# include <signal.h>
 
 # define TIME_TO_START 1000
 # define DELTA_TIME 50
-# define TIMES_FLAG -42
 # define SEM_NAME_L "l_fork"
 # define SEM_NAME_R "r_fork"
 # define SEM_NAME_LOG "log_semaphore"
@@ -50,7 +50,8 @@ typedef struct		s_work_strc
 	char			queue[16384];
 	int				qu_i;
 	long			start;
-	int				phil_check[201];
+	long			phil_check;
+	int				pid[201];
 	sem_t			*l_fork;
 	sem_t			*r_fork;
 	sem_t			*log_sem;
@@ -59,11 +60,10 @@ typedef struct		s_work_strc
 t_phil		g_sphil;
 t_work		g_work_s;
 
-void				add_to_queue(long mark, int stat);
+void				add_to_queue(int mark, int stat);
 void				*logger(void *vd);
-void				*start_thread(void *void_ptr);
-void				control(void);
-
+void				*phil_start(void *void_ptr);
+void				control(int mark);
 void				ft_exit(int i);
 int					ft_strncmp(const char *str1, const char *str2, size_t n);
 int					ft_atoi(const char *str);
