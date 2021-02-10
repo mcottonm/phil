@@ -6,7 +6,7 @@
 /*   By: mcottonm <mcottonm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/04 21:45:25 by mcottonm          #+#    #+#             */
-/*   Updated: 2021/02/09 17:05:24 by mcottonm         ###   ########.fr       */
+/*   Updated: 2021/02/10 20:26:16 by mcottonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,20 @@
 # include <stddef.h>
 # include <unistd.h>
 # include <stdio.h>
-# include <unistd.h>
 # include <stdbool.h>
-# include <fcntl.h>
-# include <sys/types.h>
 # include <sys/wait.h>
 # include <time.h>
 # include <pthread.h>
 # include <sys/time.h>
-# include <string.h>
 # include <semaphore.h>
+# include <signal.h>
+# include <string.h>
 
 # define TIME_TO_START 1000
 # define DELTA_TIME 50
 # define TIMES_FLAG -42
-# define SEM_NAME_L "l_fork"
-# define SEM_NAME_R "r_fork"
+# define CHECK_TINE 20
+# define SEM_NAME_F "fork"
 # define SEM_NAME_LOG "log_semaphore"
 
 typedef struct		s_phil
@@ -51,8 +49,7 @@ typedef struct		s_work_strc
 	int				qu_i;
 	long			start;
 	int				phil_check[201];
-	sem_t			*l_fork;
-	sem_t			*r_fork;
+	sem_t			*forks;
 	sem_t			*log_sem;
 }					t_work;
 

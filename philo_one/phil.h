@@ -6,7 +6,7 @@
 /*   By: mcottonm <mcottonm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/04 21:45:25 by mcottonm          #+#    #+#             */
-/*   Updated: 2021/02/08 17:52:46 by mcottonm         ###   ########.fr       */
+/*   Updated: 2021/02/10 20:25:48 by mcottonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,18 @@
 # include <stddef.h>
 # include <unistd.h>
 # include <stdio.h>
-# include <unistd.h>
 # include <stdbool.h>
-# include <fcntl.h>
-# include <sys/types.h>
 # include <sys/wait.h>
 # include <time.h>
 # include <pthread.h>
 # include <sys/time.h>
+# include <semaphore.h>
+# include <signal.h>
 # include <string.h>
 
 # define TIME_TO_START 1000
 # define DELTA_TIME 50
+# define CHECK_TINE 20
 # define TIMES_FLAG -42
 
 typedef struct		s_phil

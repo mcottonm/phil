@@ -6,7 +6,7 @@
 /*   By: mcottonm <mcottonm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 18:10:23 by mcottonm          #+#    #+#             */
-/*   Updated: 2021/02/09 15:53:51 by mcottonm         ###   ########.fr       */
+/*   Updated: 2021/02/10 17:44:58 by mcottonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,15 @@ static void	pars_args(int ac, char **av, t_phil *g_sphil)
 	|| g_sphil->nbr_of_phil < 2)
 		ft_exit(2);
 	if (60 > (g_sphil->time_to_die = ft_atoi(av[2])))
-		exit(3);
+		ft_exit(3);
 	if (60 > (g_sphil->time_to_eat = ft_atoi(av[3])))
-		exit(3);
+		ft_exit(3);
 	if (60 > (g_sphil->time_to_sleep = ft_atoi(av[4])))
-		exit(3);
+		ft_exit(3);
 	if (ac == 6)
 	{
 		g_sphil->times = ft_atoi(av[5]);
-		if (!g_sphil->times)
+		if (g_sphil->times <= 0)
 			exit(0);
 	}
 	else

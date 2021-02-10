@@ -6,7 +6,7 @@
 /*   By: mcottonm <mcottonm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 18:10:23 by mcottonm          #+#    #+#             */
-/*   Updated: 2021/02/09 17:06:36 by mcottonm         ###   ########.fr       */
+/*   Updated: 2021/02/10 18:15:52 by mcottonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,15 @@ static void	pars_args(int ac, char **av, t_phil *g_sphil)
 	|| g_sphil->nbr_of_phil < 2)
 		ft_exit(2);
 	if (60 > (g_sphil->time_to_die = ft_atoi(av[2])))
-		exit(3);
+		ft_exit(3);
 	if (60 > (g_sphil->time_to_eat = ft_atoi(av[3])))
-		exit(3);
+		ft_exit(3);
 	if (60 > (g_sphil->time_to_sleep = ft_atoi(av[4])))
-		exit(3);
+		ft_exit(3);
 	if (ac == 6)
 	{
 		g_sphil->times = ft_atoi(av[5]);
-		if (!g_sphil->times)
+		if (g_sphil->times <= 0)
 			exit(0);
 	}
 	else
@@ -43,10 +43,9 @@ static void	emul_strt(t_phil sphil, pthread_t *phils)
 
 	g_work_s.start = timer_now() + 1000;
 	i = -1;
-	sem_unlink(SEM_NAME_L);
-	g_work_s.l_fork= sem_open(SEM_NAME_L, O_CREAT, 0644, g_sphil.nbr_of_phil / 2);
-	sem_unlink(SEM_NAME_R);
-	g_work_s.r_fork = sem_open(SEM_NAME_R, O_CREAT, 0644, g_sphil.nbr_of_phil / 2);
+	sem_unlink(SEM_NAME_F);
+	g_work_s.forks = sem_open(SEM_NAME_F, O_CREAT,
+		0644, g_sphil.nbr_of_phil);
 	sem_unlink(SEM_NAME_LOG);
 	g_work_s.log_sem = sem_open(SEM_NAME_LOG, O_CREAT, 0644, 1);
 	i = -1;
@@ -64,8 +63,7 @@ static void	emul_end(t_phil g_sphil, pthread_t *phils)
 		if ((pthread_join(phils[i], NULL)))
 			exit(1);
 	i = -1;
-	sem_unlink(SEM_NAME_L);
-	sem_unlink(SEM_NAME_R);
+	sem_unlink(SEM_NAME_F);
 	sem_unlink(SEM_NAME_LOG);
 }
 

@@ -6,7 +6,7 @@
 /*   By: mcottonm <mcottonm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 18:50:33 by mcottonm          #+#    #+#             */
-/*   Updated: 2021/02/09 16:25:48 by mcottonm         ###   ########.fr       */
+/*   Updated: 2021/02/10 19:47:14 by mcottonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static bool		cntr_chk(int i)
 			return (false);
 		}
 	}
-	else if ((g_work_s.phil_check[i] -= DELTA_TIME * 2) < 0)
+	else if ((g_work_s.phil_check[i] -= CHECK_TINE) < 0)
 	{
 		g_work_s.kill = true;
 		printf("[%ld] %d is died\n", timer_now() - g_work_s.start, ++i);
@@ -57,7 +57,7 @@ void			control(void)
 				return ;
 			sem_post(g_work_s.log_sem);
 		}
-		timer_d += DELTA_TIME * 2;
+		timer_d += CHECK_TINE;
 		pth_sleep(timer_d);
 	}
 }

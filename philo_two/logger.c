@@ -6,7 +6,7 @@
 /*   By: mcottonm <mcottonm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/04 22:55:35 by mcottonm          #+#    #+#             */
-/*   Updated: 2021/02/09 17:01:32 by mcottonm         ###   ########.fr       */
+/*   Updated: 2021/02/10 18:32:42 by mcottonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,18 @@
 
 static void	add_messg(int stat)
 {
-	const char	*str_thnk = " is thinking\n";
-	const char	*str_eat = " is eating\n";
-	const char	*str_slp = " is sleeping\n";
 	const char	*str;
 	int			i;
 
 	i = 0;
 	if (stat == 1)
-		str = str_thnk;
+		str = " is thinking\n";
 	if (stat == 2)
-		str = str_eat;
+		str = " is eating\n";
 	if (stat == 3)
-		str = str_slp;
+		str = " is sleeping\n";
+	if (stat == 4)
+		str = " has taken a fork\n";
 	while (str[i])
 		g_work_s.queue[g_work_s.qu_i++] = str[i++];
 }

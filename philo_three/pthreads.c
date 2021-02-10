@@ -6,7 +6,7 @@
 /*   By: mcottonm <mcottonm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/04 22:50:08 by mcottonm          #+#    #+#             */
-/*   Updated: 2021/02/09 23:18:08 by mcottonm         ###   ########.fr       */
+/*   Updated: 2021/02/10 18:45:28 by mcottonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,21 @@
 
 static void	think(long mark)
 {
-	sem_wait(g_work_s.l_fork);
-	sem_wait(g_work_s.r_fork);
 	add_to_queue(mark, 1);
+	sem_wait(g_work_s.fork);
+	add_to_queue(mark, 4);
+	sem_wait(g_work_s.fork);
+	add_to_queue(mark, 4);
 }
 
 static void	eat(long mark, long *timer)
 {
 	*timer = timer_now();
-	g_work_s.phil_check = g_sphil.time_to_die + g_sphil.time_to_eat;
+	g_work_s.phil_check = g_sphil.time_to_die;
 	if (g_work_s.kill)
 	{
-		sem_post(g_work_s.l_fork);
-		sem_post(g_work_s.r_fork);
+		sem_post(g_work_s.fork);
+		sem_post(g_work_s.fork);
 		return ;
 	}
 	add_to_queue(mark, 2);
@@ -38,8 +40,8 @@ static void	sleeping(long mark, long *timer)
 {
 	add_to_queue(mark, 3);
 	*timer += g_sphil.time_to_sleep;
-	sem_post(g_work_s.l_fork);
-	sem_post(g_work_s.r_fork);
+	sem_post(g_work_s.fork);
+	sem_post(g_work_s.fork);
 	pth_sleep(*timer);
 }
 
@@ -47,8 +49,8 @@ static bool	times_check(int *pth_times)
 {
 	if ((!--(*pth_times) && g_sphil.times) || g_work_s.kill)
 	{
-		sem_post(g_work_s.l_fork);
-		sem_post(g_work_s.r_fork);
+		sem_post(g_work_s.fork);
+		sem_post(g_work_s.fork);
 		g_work_s.kill = true;
 		return (false);
 	}
@@ -61,6 +63,7 @@ void		*phil_start(void *void_ptr)
 	int			pth_times;
 	const int	mark = (const int)void_ptr;
 
+	pthread_detach(g_work_s.phil);
 	pth_times = g_sphil.times;
 	timer = g_work_s.start;
 	pth_sleep(g_work_s.start);

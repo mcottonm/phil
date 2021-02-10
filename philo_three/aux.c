@@ -6,7 +6,7 @@
 /*   By: mcottonm <mcottonm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/04 22:58:03 by mcottonm          #+#    #+#             */
-/*   Updated: 2021/02/09 22:06:12 by mcottonm         ###   ########.fr       */
+/*   Updated: 2021/02/10 15:44:58 by mcottonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ft_exit(int i)
 		printf("ERROR: wrong number of arguments\n");
 	if (i == 2)
 		printf("ERROR: wrong number of threads\n");
-	if (i == 2)
+	if (i == 3)
 		printf("ERROR: wrong time\n");
 	exit(1);
 }

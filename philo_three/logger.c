@@ -6,7 +6,7 @@
 /*   By: mcottonm <mcottonm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/04 22:55:35 by mcottonm          #+#    #+#             */
-/*   Updated: 2021/02/09 22:14:21 by mcottonm         ###   ########.fr       */
+/*   Updated: 2021/02/10 18:37:16 by mcottonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,7 @@ void		add_to_queue(int mark, int stat)
 		printf("%-10ld %d is eating\n", time, mark + 1);
 	if (stat == 3)
 		printf("%-10ld %d is sleeping\n", time, mark + 1);
+	if (stat == 4)
+		printf("%-10ld %d has taken a fork\n", time, mark + 1);
 	sem_post(g_work_s.log_sem);
 }
