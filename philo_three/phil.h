@@ -6,7 +6,7 @@
 /*   By: mcottonm <mcottonm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/04 21:45:25 by mcottonm          #+#    #+#             */
-/*   Updated: 2021/02/10 20:24:22 by mcottonm         ###   ########.fr       */
+/*   Updated: 2021/02/11 20:51:39 by mcottonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 
 # define TIME_TO_START 1000
 # define DELTA_TIME 50
-# define CHECK_TINE 20
+# define CHECK_TINE 5
 # define SEM_NAME_F "fork"
 # define SEM_NAME_LOG "log_semaphore"
 
@@ -59,7 +59,7 @@ void				add_to_queue(int mark, int stat);
 void				*logger(void *vd);
 void				*phil_start(void *void_ptr);
 void				control(int mark);
-void				ft_exit(int i);
+bool				ft_exit(int i);
 int					ft_strncmp(const char *str1, const char *str2, size_t n);
 int					ft_atoi(const char *str);
 int					ft_strncmp(const char *str1, const char *str2, size_t n);

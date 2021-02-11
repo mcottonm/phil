@@ -6,13 +6,13 @@
 /*   By: mcottonm <mcottonm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/04 22:58:03 by mcottonm          #+#    #+#             */
-/*   Updated: 2021/02/10 15:44:51 by mcottonm         ###   ########.fr       */
+/*   Updated: 2021/02/11 20:38:06 by mcottonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "phil.h"
 
-void	ft_exit(int i)
+bool	ft_exit(int i)
 {
 	if (i == 1)
 		printf("ERROR: wrong number of arguments\n");
@@ -20,7 +20,13 @@ void	ft_exit(int i)
 		printf("ERROR: wrong number of threads\n");
 	if (i == 3)
 		printf("ERROR: wrong time\n");
-	exit(1);
+	if (i == 4)
+	{
+		printf("[0]              1 is thinking\n");
+		pth_sleep(timer_now() + g_sphil.time_to_die);
+		printf("[%d]            1 died\n", g_sphil.time_to_die);
+	}
+	return (false);
 }
 
 int		ft_strncmp(const char *str1, const char *str2, size_t n)

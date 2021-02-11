@@ -6,7 +6,7 @@
 /*   By: mcottonm <mcottonm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/04 22:50:08 by mcottonm          #+#    #+#             */
-/*   Updated: 2021/02/10 18:31:26 by mcottonm         ###   ########.fr       */
+/*   Updated: 2021/02/11 20:49:00 by mcottonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void		*start_thread(void *void_ptr)
 	int			pth_times;
 
 	pth_times = g_sphil.times;
+	g_work_s.phil_check[mark] = g_sphil.time_to_die;
 	timer = g_work_s.start;
 	pth_sleep(g_work_s.start);
 	if (mark % 2 && !(g_sphil.nbr_of_phil % 2))
@@ -77,7 +78,7 @@ void		*start_thread(void *void_ptr)
 		if (g_work_s.kill)
 			return (NULL);
 		if (mark % 2 && (g_sphil.nbr_of_phil % 2))
-			pth_sleep(timer_now() + 10);
+			pth_sleep(timer_now() + 3);
 		think(mark, l_fork, r_fork);
 		eat(mark, &timer, l_fork, r_fork);
 		if (!times_check(mark, &pth_times, l_fork, r_fork))

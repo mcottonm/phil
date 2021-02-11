@@ -6,7 +6,7 @@
 /*   By: mcottonm <mcottonm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/04 22:50:08 by mcottonm          #+#    #+#             */
-/*   Updated: 2021/02/10 18:26:16 by mcottonm         ###   ########.fr       */
+/*   Updated: 2021/02/11 20:56:29 by mcottonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static void	think(long mark)
 static void	eat(long mark, long *timer)
 {
 	*timer = timer_now();
+	g_work_s.phil_check[mark] = 0;
 	g_work_s.phil_check[mark] = g_sphil.time_to_die;
 	if (g_work_s.kill)
 	{
@@ -65,6 +66,7 @@ void		*start_thread(void *void_ptr)
 
 	pth_times = g_sphil.times;
 	timer = g_work_s.start;
+	g_work_s.phil_check[mark] = g_sphil.time_to_die;
 	pth_sleep(g_work_s.start);
 	if (mark % 2)
 		pth_sleep(timer_now() + DELTA_TIME);

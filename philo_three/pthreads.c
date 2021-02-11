@@ -6,7 +6,7 @@
 /*   By: mcottonm <mcottonm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/04 22:50:08 by mcottonm          #+#    #+#             */
-/*   Updated: 2021/02/10 18:45:28 by mcottonm         ###   ########.fr       */
+/*   Updated: 2021/02/11 20:10:40 by mcottonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void		*phil_start(void *void_ptr)
 	pthread_detach(g_work_s.phil);
 	pth_times = g_sphil.times;
 	timer = g_work_s.start;
+	g_work_s.phil_check = g_sphil.time_to_die;
 	pth_sleep(g_work_s.start);
 	if ((mark) % 2)
 		pth_sleep(timer_now() + DELTA_TIME);

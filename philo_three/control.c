@@ -6,7 +6,7 @@
 /*   By: mcottonm <mcottonm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 18:50:33 by mcottonm          #+#    #+#             */
-/*   Updated: 2021/02/10 20:16:57 by mcottonm         ###   ########.fr       */
+/*   Updated: 2021/02/11 20:27:23 by mcottonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void			control(int mark)
 {
 	long		timer_d;
 
-	timer_d = g_work_s.start + g_sphil.time_to_die;
+	timer_d = g_work_s.start;
 	if (pthread_create(&g_work_s.phil, NULL, phil_start, (void*)(long)mark))
 		exit(1);
 	pth_sleep(timer_d);

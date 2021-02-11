@@ -6,7 +6,7 @@
 /*   By: mcottonm <mcottonm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 18:50:33 by mcottonm          #+#    #+#             */
-/*   Updated: 2021/02/10 18:22:02 by mcottonm         ###   ########.fr       */
+/*   Updated: 2021/02/11 20:08:33 by mcottonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void			control(void)
 	int		i;
 	long	timer_d;
 
-	timer_d = g_work_s.start + g_sphil.time_to_die;
+	timer_d = g_work_s.start;
 	pth_sleep(timer_d);
 	while (!g_work_s.kill)
 	{

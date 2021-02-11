@@ -6,34 +6,37 @@
 /*   By: mcottonm <mcottonm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 18:10:23 by mcottonm          #+#    #+#             */
-/*   Updated: 2021/02/10 20:41:21 by mcottonm         ###   ########.fr       */
+/*   Updated: 2021/02/11 20:39:00 by mcottonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "phil.h"
 
-static void	pars_args(int ac, char **av, t_phil *g_sphil)
+static bool	pars_args(int ac, char **av, t_phil *g_sphil)
 {
 	if (ac < 5 || ac > 6)
-		ft_exit(1);
+		return (ft_exit(1));
 	if (200 < (g_sphil->nbr_of_phil = ft_atoi(av[1]))
-	|| g_sphil->nbr_of_phil < 2)
-		ft_exit(2);
+	|| g_sphil->nbr_of_phil < 1)
+		return (ft_exit(2));
 	if (60 > (g_sphil->time_to_die = ft_atoi(av[2])))
-		ft_exit(3);
+		return (ft_exit(3));
 	if (60 > (g_sphil->time_to_eat = ft_atoi(av[3])))
-		ft_exit(3);
+		return (ft_exit(3));
 	if (60 > (g_sphil->time_to_sleep = ft_atoi(av[4])))
-		ft_exit(3);
+		return (ft_exit(3));
+	if (g_sphil->nbr_of_phil == 1)
+		return (ft_exit(4));
 	if (ac == 6)
 	{
 		g_sphil->times = ft_atoi(av[5]);
 		if (g_sphil->times <= 0)
-			exit(0);
+			return (false);
 	}
 	else
 		g_sphil->times = 0;
 	g_work_s.kill = false;
+	return (true);
 }
 
 static void	emul_strt(t_phil sphil)
@@ -96,7 +99,8 @@ static void	emul_end(void)
 
 int			main(int ac, char **av)
 {
-	pars_args(ac, av, &g_sphil);
+	if (!pars_args(ac, av, &g_sphil))
+		return (0);
 	emul_strt(g_sphil);
 	emul_end();
 	return (0);
