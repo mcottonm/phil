@@ -6,7 +6,7 @@
 /*   By: mcottonm <mcottonm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/04 22:50:08 by mcottonm          #+#    #+#             */
-/*   Updated: 2021/02/11 20:49:00 by mcottonm         ###   ########.fr       */
+/*   Updated: 2021/02/12 18:13:56 by mcottonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,6 @@ void		*start_thread(void *void_ptr)
 		pth_sleep(timer_now() + DELTA_TIME);
 	while (!g_work_s.kill)
 	{
-		if (g_work_s.kill)
-			return (NULL);
 		if (mark % 2 && (g_sphil.nbr_of_phil % 2))
 			pth_sleep(timer_now() + 3);
 		think(mark, l_fork, r_fork);

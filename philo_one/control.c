@@ -6,7 +6,7 @@
 /*   By: mcottonm <mcottonm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 18:50:33 by mcottonm          #+#    #+#             */
-/*   Updated: 2021/02/11 20:08:33 by mcottonm         ###   ########.fr       */
+/*   Updated: 2021/02/12 18:27:41 by mcottonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,12 @@ static bool		cntr_chk(int i)
 			zring = g_work_s.phil_check[i]
 			> zring ? g_work_s.phil_check[i] : zring;
 		if (zring == TIMES_FLAG)
-		{
-			pthread_mutex_unlock(&(g_work_s.lock[g_sphil.nbr_of_phil + 1]));
 			return (false);
-		}
 	}
 	else if ((g_work_s.phil_check[i] -= CHECK_TINE) < 0)
 	{
 		g_work_s.kill = true;
 		printf("[%ld] %d died\n", timer_now() - g_work_s.start, ++i);
-		pthread_mutex_unlock(&(g_work_s.lock[g_sphil.nbr_of_phil + 1]));
 		return (false);
 	}
 	return (true);
@@ -54,7 +50,12 @@ void			control(void)
 		{
 			pthread_mutex_lock(&(g_work_s.lock[g_sphil.nbr_of_phil + 1]));
 			if (!cntr_chk(i))
+			{
+				i = -1;
+				while (++i < g_sphil.nbr_of_phil + 2)
+					pthread_mutex_unlock(&(g_work_s.lock[i]));
 				return ;
+			}
 			pthread_mutex_unlock(&(g_work_s.lock[g_sphil.nbr_of_phil + 1]));
 		}
 		timer_d += CHECK_TINE;

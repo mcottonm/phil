@@ -6,7 +6,7 @@
 /*   By: mcottonm <mcottonm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/05 18:50:33 by mcottonm          #+#    #+#             */
-/*   Updated: 2021/02/11 20:11:49 by mcottonm         ###   ########.fr       */
+/*   Updated: 2021/02/12 18:40:10 by mcottonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,12 @@ void			control(void)
 		{
 			sem_wait(g_work_s.log_sem);
 			if (!cntr_chk(i))
+			{
+				i = -1;
+				while (++i < g_sphil.nbr_of_phil + 1)
+					sem_post(g_work_s.forks);
 				return ;
+			}
 			sem_post(g_work_s.log_sem);
 		}
 		timer_d += CHECK_TINE;

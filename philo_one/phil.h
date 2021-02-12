@@ -6,7 +6,7 @@
 /*   By: mcottonm <mcottonm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/04 21:45:25 by mcottonm          #+#    #+#             */
-/*   Updated: 2021/02/11 20:48:07 by mcottonm         ###   ########.fr       */
+/*   Updated: 2021/02/12 18:25:36 by mcottonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,11 @@ typedef struct		s_phil
 typedef struct		s_work_strc
 {
 	bool			kill;
-	char			queue[16384];
+	char			queue[32768];
 	int				qu_i;
 	long			start;
-	int				phil_check[201];
-	pthread_mutex_t	lock[202];
+	int				phil_check[204];
+	pthread_mutex_t	lock[204];
 }					t_work;
 
 t_phil		g_sphil;

@@ -6,7 +6,7 @@
 /*   By: mcottonm <mcottonm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 18:10:23 by mcottonm          #+#    #+#             */
-/*   Updated: 2021/02/11 20:39:00 by mcottonm         ###   ########.fr       */
+/*   Updated: 2021/02/12 18:47:44 by mcottonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static int	proc_check(int *status)
 			{
 				g = -1;
 				while (++g < g_sphil.nbr_of_phil)
-						kill(g_work_s.pid[g], SIGKILL);
+					kill(g_work_s.pid[g], SIGKILL);
 				return (-1);
 			}
 			else
@@ -93,7 +93,6 @@ static void	emul_end(void)
 		if (proc_check(&status) == -1)
 			break ;
 	sem_unlink(SEM_NAME_F);
-	sem_post(g_work_s.fork);
 	sem_unlink(SEM_NAME_LOG);
 }
 

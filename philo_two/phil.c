@@ -6,7 +6,7 @@
 /*   By: mcottonm <mcottonm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/03 18:10:23 by mcottonm          #+#    #+#             */
-/*   Updated: 2021/02/11 20:39:10 by mcottonm         ###   ########.fr       */
+/*   Updated: 2021/02/12 18:40:59 by mcottonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static void	emul_end(t_phil g_sphil, pthread_t *phils)
 
 int			main(int ac, char **av)
 {
-	pthread_t		phils[201];
+	pthread_t		phils[202];
 
 	if (!pars_args(ac, av, &g_sphil))
 		return (0);

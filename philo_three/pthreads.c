@@ -6,7 +6,7 @@
 /*   By: mcottonm <mcottonm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/04 22:50:08 by mcottonm          #+#    #+#             */
-/*   Updated: 2021/02/11 20:10:40 by mcottonm         ###   ########.fr       */
+/*   Updated: 2021/02/12 18:10:58 by mcottonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,6 @@ void		*phil_start(void *void_ptr)
 		pth_sleep(timer_now() + DELTA_TIME);
 	while (!g_work_s.kill)
 	{
-		if (g_work_s.kill)
-			return (NULL);
 		think(mark);
 		eat(mark, &timer);
 		if (!times_check(&pth_times))
