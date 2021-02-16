@@ -6,7 +6,7 @@
 /*   By: mcottonm <mcottonm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/04 22:55:35 by mcottonm          #+#    #+#             */
-/*   Updated: 2021/02/12 18:16:16 by mcottonm         ###   ########.fr       */
+/*   Updated: 2021/02/16 16:43:21 by mcottonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void		*logger(void *vd)
 			write(1, g_work_s.queue, g_work_s.qu_i);
 		g_work_s.qu_i = 0;
 		pthread_mutex_unlock(&(g_work_s.lock[g_sphil.nbr_of_phil + 1]));
-		timer += DELTA_TIME * 2;
+		timer += DELTA_TIME;
 		pth_sleep(timer);
 	}
 	return (vd);
